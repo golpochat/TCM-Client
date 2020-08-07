@@ -1,0 +1,13 @@
+.container-match-detail-list,
+.container-match-detail-create,
+.container-match-detail-update,
+.container-match-detail-view,
+.container-match-detail-profile {
+  -webkit-box-shadow: 10px 10px 15px 10px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 10px 10px 15px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 10px 10px 15px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 10px 10px 10px 10px;
+
+  padding: 25px;
+  margin-top: 50px;
+}
