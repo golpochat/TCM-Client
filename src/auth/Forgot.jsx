@@ -6,7 +6,10 @@ import { toast } from "react-toastify";
 
 const Forgot = ({ history }) => {
   const [values, setValues] = useState({
-    email: "sujanhossain313@gmail.com",
+    // email: "sujanhossain313@gmail.com",
+    // btnLabel: "Send the link to reset my password",
+
+    email: "",
     btnLabel: "Send the link to reset my password",
   });
 

@@ -11,8 +11,10 @@ import './Auth.css'
 
 const Login = ({ history }) => {
   const [values, setValues] = useState({
-    email: "sujanhossain313@gmail.com",
-    password: "abc123",
+    // email: "sujanhossain313@gmail.com",
+    // password: "abc123",
+    email: "",
+    password: "",
     btnLabel: "Login",
   }, []);
 

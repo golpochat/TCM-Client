@@ -8,8 +8,8 @@ import './Auth.css'
 
 const Signup = () => {
   const [values, setValues] = useState({
-    email: "abc@gmail.com",
-    password: "abc123",
+    email: "",
+    password: "",
     btnLabel: "Submit",
   });
 

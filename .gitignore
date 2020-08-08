@@ -16,7 +16,7 @@
 .env
 .env.local
 .env.development
-#.env.production.something
+#.env.production
 .env.test.local
 
 npm-debug.log*
