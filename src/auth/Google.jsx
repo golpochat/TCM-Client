@@ -19,7 +19,7 @@ const Google = ({ informParent = (g) => g }) => {
       })
       .catch((error) => {
         console.log("GOOGLE LOGIN ERROR", error);
-        toast.error(error.response.data.error);
+        // toast.error(error.response.data.error);
       });
   };
   return (

@@ -9,18 +9,17 @@ import Layout from "../../../layout/common/Layout";
 import Avatar from '../../../shared/avatar/Avatar'
 import PaymentTable from "../components/Payment";
 import History from "../components/History";
-import Ranking from "../components/Ranking";
 import CardInfo from "../components/CardInfo";
 import './Profile.css'
 
 
 const Profile = ({ history }) => {
+  const token = getCookie("token");
   const [values, setValues] = useState([]);
   const [registration, setRegistration] = useState([]);
   const [registrationBills, setRegistrationBills] = useState([]);
   const [fees, setFees] = useState([]);
-  const token = getCookie("token");
-
+  const [rankings, setRankings] = useState([]);
   const [profileID, setProfileID] = useState([]);
   const [payments, setPayments] = useState([]);
 
@@ -84,7 +83,7 @@ const Profile = ({ history }) => {
           headers: { Authorization: `Bearer ${token}` },
         })
           .then((register) => {
-            console.log(register.data)
+            // console.log(register.data)
             setRegistrationBills(register.data)
           })
           .catch((err) => {
@@ -94,11 +93,11 @@ const Profile = ({ history }) => {
         // match fee
         axios({
           method: "GET",
-          url: `${process.env.REACT_APP_API}/match-detail/fee-list/${profile.data._id}`,
+          url: `${process.env.REACT_APP_API}/match-detail/fee-by-player/${profile.data._id}`,
           headers: { Authorization: `Bearer ${token}` },
         })
           .then((fees) => {
-            console.log(fees.data)
+            // console.log(fees.data)
             setFees(fees.data)
           })
           .catch((err) => {
@@ -122,6 +121,22 @@ const Profile = ({ history }) => {
         // console.log("PLAYER PROFILE UPDATE ERROR", error);
         history.push(`/${isAuth().role}/profile/create`);
       });
+
+    // get all match detail for ranking
+    axios({
+      method: "GET",
+      url: `${process.env.REACT_APP_API}/match-detail/all`,
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((response) => {
+        // console.log("FOUND MATCH DETAIL LIST", response.data);
+        setRankings(response.data)
+      })
+      .catch((error) => {
+        // console.log("MATCH DETAIL LOADING ERROR", error.response.data.error);
+        toast.error(error.response.data.error);
+      });
+
   };
   const doRegister = (id) => {
     axios({
@@ -150,7 +165,9 @@ const Profile = ({ history }) => {
   const totalWicket = fees.reduce((result, match) => result + match.wicket, 0)
 
   // All about ranking
-  const rankings = [{}]
+  const allrounderRanking = rankings.findIndex(player => player._id.profile === profileID) + 1;
+  const bastmanRanking = rankings.sort((b1, b2) => b1.run < b2.run ? 1 : -1).findIndex(player => player._id.profile === profileID && player.run > 0) + 1
+  const bowlerRanking = rankings.sort((w1, w2) => w1.wicket < w2.wicket ? 1 : -1).findIndex(player => player._id.profile === profileID && player.wicket > 0) + 1
 
   const profileInfo = () => (
     <div className="row">
@@ -208,73 +225,6 @@ const Profile = ({ history }) => {
       </div>
     </div >
   );
-  // const paymentInfo = () => (
-  //   <div className="row mb-5">
-  //     <div className="col-sm-4">
-  //       <div className="card">
-  //         <div className="card-body text-center">
-  //           <h2 className="card-title text-success">Total amount</h2>
-  //           <hr />
-  //           <h2>{`€${registration.fee}`}</h2>
-  //         </div>
-  //       </div>
-  //     </div>
-  //     <div className="col-sm-4">
-  //       <div className="card">
-  //         <div className="card-body text-center">
-  //           <h2 className="card-title text-success">Paid</h2>
-  //           <hr />
-  //           <h2>{`€${payments.reduce((result, payment) => result + payment.amount, 0)}`}</h2>
-  //         </div>
-  //       </div>
-  //     </div>
-  //     <div className="col-sm-4">
-  //       <div className="card">
-  //         <div className="card-body text-center">
-  //           <h2 className="card-title text-success">Outstanding</h2>
-  //           <hr />
-  //           <h2>€100.00</h2>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
-
-  // const histry = () => (
-  //   <div className="row">
-  //     <div className="col-md-12">
-  //       <div className="bd-example bd-example-tabs">
-  //         <ul className="nav nav-tabs" id="myTab" role="tablist">
-  //           <li className="nav-item">
-  //             <a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
-  //           </li>
-  //           <li className="nav-item">
-  //             <a className="nav-link" id="history-tab" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="false">History</a>
-  //           </li>
-  //           <li className="nav-item">
-  //             <a className="nav-link" id="payment-tab" data-toggle="tab" href="#payment" role="tab" aria-controls="payment" aria-selected="false">Payment</a>
-  //           </li>
-  //         </ul>
-  //         <div className="tab-content" id="myTabContent">
-  //           <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-  //             <h1 className="text-center m-5">Ranking</h1>
-  //             {/* <Ranking rankings={null} /> */}
-  //           </div>
-  //           <div className="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
-  //             <h1 className="text-center m-5">Carrier records</h1>
-  //             {/* <History records={null} /> */}
-  //           </div>
-  //           <div className="tab-pane fade" id="payment" role="tabpanel" aria-labelledby="payment-tab">
-  //             <h1 className="text-center m-5">List of payments</h1>
-  //             {paymentInfo()}
-  //             <PaymentTable playerPayments={payments} />
-  //           </div>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   </div >
-  // )
-
 
   const histry = () => (
     <div className="row">
@@ -296,22 +246,21 @@ const Profile = ({ history }) => {
               <h1 className="text-center m-5">Ranking</h1>
               <div className="row mb-5">
                 <CardInfo
+                  heading={'Allrounder'}
+                  value={allrounderRanking}
+                  isMoney={false}
+                />
+                <CardInfo
                   heading={'Batsman'}
-                  value={5}
+                  value={bastmanRanking}
                   isMoney={false}
                 />
                 <CardInfo
                   heading={'Bowler'}
-                  value={7}
-                  isMoney={false}
-                />
-                <CardInfo
-                  heading={'Allrounder'}
-                  value={3}
+                  value={bowlerRanking}
                   isMoney={false}
                 />
               </div>
-              {/* <Ranking records={rankings} /> */}
             </div>
             <div className="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
               <h1 className="text-center m-5">Carrier records</h1>

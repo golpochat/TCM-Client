@@ -104,7 +104,7 @@ const CreateTeam = ({ history }) => {
             .then((response) => {
                 // console.log("CREATE MATCH", response);
                 toast.error(response.data.message);
-                history.push(`/${isAuth().role}/match/list`);
+                history.push(`/${isAuth().role}/squad/list`);
             })
             .catch((error) => {
                 console.log("CREATE MATCH ERROR", error.response.data.error);

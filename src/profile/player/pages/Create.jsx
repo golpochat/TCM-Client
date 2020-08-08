@@ -101,8 +101,9 @@ const CreateProfile = ({ history }) => {
             <input
               onChange={handleChange("image")}
               type="file"
-              accept="image/png, image/jpg, image/jpeg"
+              accept="image/jpg, image/jpeg"
             />
+            <p className='text-danger'><small>jpg and jpeg image only</small></p>
           </div>
           <div className="form-group">
             <label className="text-muted">Address</label>

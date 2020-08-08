@@ -62,7 +62,6 @@ const PlayerList = () => {
                   <td className="text-right">
                     <Link to={`/admin/player-payment/create/${player._id}`} className="btn btn-primary btn-sm mr-2">Add payment</Link>
                     <Link to={`/admin/player/profile-admin-view/${player._id}`} className="btn btn-success btn-sm mr-2">View player</Link>
-                    <Link to={`/admin/player/update/${player._id}`} className="btn btn-warning btn-sm mr-2">Edit</Link>
                   </td>
                 </tr> : null
               ))

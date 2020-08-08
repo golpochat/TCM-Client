@@ -9,16 +9,17 @@ import Layout from "../../../layout/common/Layout";
 import Avatar from '../../../shared/avatar/Avatar'
 import PaymentTable from "../components/Payment";
 import History from "../components/History";
-import Ranking from "../components/Ranking";
+// import Ranking from "../components/Ranking";
 import CardInfo from "../components/CardInfo";
 import './Profile.css'
 
 const Profile = ({ history, match }) => {
-  const [values, setValues] = useState([]);
   const token = getCookie("token");
 
+  const [values, setValues] = useState([]);
   const [registrationBills, setRegistrationBills] = useState([]);
   const [fees, setFees] = useState([]);
+  const [rankings, setRankings] = useState([]);
   const [profileID, setProfileID] = useState([]);
   const [payments, setPayments] = useState([]);
 
@@ -104,6 +105,20 @@ const Profile = ({ history, match }) => {
         // console.log("PLAYER PROFILE UPDATE ERROR", error);
         history.push(`/${isAuth().role}/profile/create`);
       });
+    // get all match detail for ranking
+    axios({
+      method: "GET",
+      url: `${process.env.REACT_APP_API}/match-detail/all`,
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((response) => {
+        // console.log("FOUND MATCH DETAIL LIST", response.data);
+        setRankings(response.data)
+      })
+      .catch((error) => {
+        // console.log("MATCH DETAIL LOADING ERROR", error.response.data.error);
+        toast.error(error.response.data.error);
+      });
   };
 
   // All payment calculation
@@ -118,7 +133,9 @@ const Profile = ({ history, match }) => {
   const totalWicket = fees.reduce((result, match) => result + match.wicket, 0)
 
   // All about ranking
-  const rankings = [{}]
+  const allrounderRanking = rankings.findIndex(player => player._id.profile === profileID) + 1;
+  const bastmanRanking = rankings.sort((b1, b2) => b1.run < b2.run ? 1 : -1).findIndex(player => player._id.profile === profileID && player.run > 0) + 1
+  const bowlerRanking = rankings.sort((w1, w2) => w1.wicket < w2.wicket ? 1 : -1).findIndex(player => player._id.profile === profileID && player.wicket > 0) + 1
 
   const profileInfo = () => (
     <div className="row">
@@ -178,22 +195,21 @@ const Profile = ({ history, match }) => {
               <h1 className="text-center m-5">Ranking</h1>
               <div className="row mb-5">
                 <CardInfo
+                  heading={'Allrounder'}
+                  value={allrounderRanking}
+                  isMoney={false}
+                />
+                <CardInfo
                   heading={'Batsman'}
-                  value={5}
+                  value={bastmanRanking}
                   isMoney={false}
                 />
                 <CardInfo
                   heading={'Bowler'}
-                  value={7}
-                  isMoney={false}
-                />
-                <CardInfo
-                  heading={'Allrounder'}
-                  value={3}
+                  value={bowlerRanking}
                   isMoney={false}
                 />
               </div>
-              {/* <Ranking records={rankings} /> */}
             </div>
             <div className="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
               <h1 className="text-center m-5">Carrier records</h1>
