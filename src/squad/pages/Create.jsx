@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import 'react-datepicker/dist/react-datepicker.css'
-import DatePicker from 'react-datepicker'
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -12,14 +10,11 @@ import './Squad.css'
 
 const CreateSquad = ({ match, history }) => {
     const [values, setValues] = useState({
-        squadSize: 1,
-        opponent: '',
-        team: '',
+        squadSize: 11,
         profiles: [],
         status: 'playing',
         btnLabel: "Create",
     });
-    const [date, setDate] = useState(new Date());
     const token = getCookie("token");
     const [matchDetail, setMatchDetail] = useState([])
     const [players, setPlayers] = useState([])
@@ -62,26 +57,19 @@ const CreateSquad = ({ match, history }) => {
     }
 
     const {
-        opponent,
-        status,
-        team,
         profiles,
+        status,
         btnLabel
     } = values;
     const handleChange = (name) => (event) => {
-        console.log(event.target.checked)
-        // console.log(event.target.type)
-        if ((event.target.type === "checkbox")) {
-            if (event.target.checked) {
-                values.profiles.push(event.target.value);
-            }
-            else {
-                values.profiles.pop(event.target.value);
-            }
+        if (event.target.checked) {
+            values.profiles.push(event.target.value);
+            // console.log(values.profiles)
         }
-        else
-            setValues({ ...values, [name]: event.target.value });
-        // console.log(values)
+        else {
+            values.profiles.splice(event.target.value, 1);
+            // console.log(values.profiles)
+        }
     };
     const doSubmit = (event) => {
         event.preventDefault();
@@ -98,7 +86,7 @@ const CreateSquad = ({ match, history }) => {
             method: "POST",
             url: `${process.env.REACT_APP_API}/squad/create/${match.params.id}`,
             headers: { Authorization: `Bearer ${token}` },
-            data: { date, match: matchDetail, team: matchDetail.team, profile: profiles, status },
+            data: { match: matchDetail, team: matchDetail.team, profile: profiles, status },
         })
             .then((response) => {
                 // console.log("SQUAD UPDATE", response);
@@ -115,50 +103,6 @@ const CreateSquad = ({ match, history }) => {
 
     const createForm = () => (
         <form>
-            {/* <div className="row">
-                <div className="col-sm-12 col-md-6 col-lg-6">
-                    <div className="form-group">
-                        <label className="text-muted">Team for squad</label>
-                        <select className="form-control" name="team" onChange={handleChange("team")}>
-                            <option key="select" value="">Select one</option>
-                            {
-                                teams.map((team) => {
-                                    return <option key={team._id} value={team._id}>{team.name}</option>;
-                                })
-                            }
-                        </select>
-                    </div>
-                </div>
-                <div className="col-sm-12 col-md-6 col-lg-6">
-                    <div className="form-group">
-                        <label className="text-muted">Dat of the match</label>
-                        <DatePicker
-                            className="form-control"
-                            placeholderText="Click to select a year"
-                            selected={date}
-                            onChange={d => setDate(d)}
-                            dateFormat="dd-MM-yyyy"
-                        // isClearable={true}
-                        />
-                    </div>
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-sm-12 col-md-12 col-lg-12">
-                    <div className="form-group">
-                        <label className="text-muted">Opponent</label>
-                        <input
-                            type="text"
-                            name="opponent"
-                            placeholder="Name of opponent team"
-                            className="form-control"
-                            onChange={handleChange('opponent')}
-                            value={opponent}
-                        />
-                    </div>
-                </div>
-            </div>
-            <hr /> */}
             <div className="row m-auto">
                 {
                     players.map(player =>

@@ -26,15 +26,14 @@ const UpdateDetails = ({ history, match }) => {
     useEffect(() => {
         loadProfile();
     }, []);
-
     const loadProfile = () => {
         axios({
             method: "GET",
-            url: `${process.env.REACT_APP_API}/match-detail/read/${match.params.m_id}`,
+            url: `${process.env.REACT_APP_API}/match-detail/read/${match.params.p_id}`,
             headers: { Authorization: `Bearer ${token}` }
         })
             .then((response) => {
-                console.log("ADMIN PROFILE LOADED", response);
+                // console.log("ADMIN PROFILE LOADED", response);
                 const {
                     run,
                     wicket,
@@ -63,14 +62,13 @@ const UpdateDetails = ({ history, match }) => {
     };
 
     const doSubmit = (event) => {
-        console.log(event)
         event.preventDefault();
         setValues({ ...values, btnLabel: "Creating" });
         axios({
-            method: "POST",
+            method: "PUT",
             url: `${process.env.REACT_APP_API}/match-detail/update/${match.params.p_id}`,
             headers: { Authorization: `Bearer ${token}` },
-            data: { run, wicket, match_fee, match: match.params.m_id, profile: match.params.p_id }
+            data: { run, wicket, match_fee }
         })
             .then((response) => {
                 // console.log("CREATE MATCH", response);

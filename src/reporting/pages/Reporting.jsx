@@ -4,7 +4,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import DatePicker from 'react-datepicker'
 import { useReactToPrint } from 'react-to-print';
-import * as moment from 'moment'
 
 import TableReport from "../components/TableReport";
 import { getCookie } from "../../auth/AuthHelper";
