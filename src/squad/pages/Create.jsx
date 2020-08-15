@@ -106,7 +106,7 @@ const CreateSquad = ({ match, history }) => {
             <div className="row m-auto">
                 {
                     players.map(player =>
-                        <div className="squad-card m-3 responsive" key={player._id}>
+                        <div className="squad-card m-3" key={player._id}>
                             <div className="row m-auto">
                                 <div className="col-sm-12 col-md-12 col-lg-12 m-2">
                                     <h4>{player.first_name + ' ' + player.last_name}</h4>
@@ -144,11 +144,11 @@ const CreateSquad = ({ match, history }) => {
     );
     return (
         <Layout>
-            <div className="container-squad-create">
-                <h1 className="text-center">Create Playing Squad</h1>
-                <hr />
-                {createForm()}
-            </div>
+            {/* <div className="container-squad-create"> */}
+            <h1 className="text-center">Create Playing Squad</h1>
+            <hr />
+            {createForm()}
+            {/* </div> */}
         </Layout>
     );
 };

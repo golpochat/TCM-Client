@@ -192,7 +192,7 @@ const Profile = ({ history }) => {
           </div>
         </div>
       </div>
-      <div className="col-sm-12 col-md-12 col-lg-6 m-auto">
+      <div className="col-sm-12 col-md-12 col-lg-6 m-auto table-responsive">
         <table className="table mt-3">
           <tbody>
             <tr>

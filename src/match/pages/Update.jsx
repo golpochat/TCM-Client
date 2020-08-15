@@ -157,9 +157,7 @@ const UpdateTeam = ({ match, history }) => {
                         <select className="form-control" value={tournament} name="tournament" onChange={handleChange("tournament")}>
                             <option key="select" value="">Select one</option>
                             {
-                                tournaments.map((tournament) => {
-                                    return <option key={tournament._id} value={tournament._id}>{tournament.name}</option>;
-                                })
+                                tournaments.map((tournament) => <option key={tournament._id} value={tournament.name}>{tournament.name}</option>)
                             }
                         </select>
                     </div>
@@ -169,7 +167,7 @@ const UpdateTeam = ({ match, history }) => {
                             <option key="select" value="">Select one</option>
                             {
                                 teams.map((team) => {
-                                    return <option key={team._id} value={team._id}>{team.name}</option>;
+                                    return <option key={team._id} value={team.name}>{team.name}</option>;
                                 })
                             }
                         </select>

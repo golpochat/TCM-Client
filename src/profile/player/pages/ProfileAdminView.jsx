@@ -142,7 +142,7 @@ const Profile = ({ history, match }) => {
       <div className="col-sm-12 col-md-6 col-lg-6 text-center mt-3">
         <Avatar img={values.image} />
       </div>
-      <div className="col-sm-12 col-md-12 col-lg-6 m-auto">
+      <div className="col-sm-12 col-md-12 col-lg-6 m-auto table-responsive">
         <table className="table mt-3">
           <tbody>
             <tr>

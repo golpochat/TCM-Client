@@ -136,7 +136,7 @@ const Profile = ({ history, match }) => {
                 </div>
             </div>
             <div className="row mt-5">
-                <div className="col-sm-12 col-md-12 col-lg-12 responsive">
+                <div className="col-sm-12 col-md-12 col-lg-12 table-responsive">
                     <table className="table">
                         <thead>
                             <tr>
@@ -172,8 +172,7 @@ const Profile = ({ history, match }) => {
     return (
         <Layout>
             <div className="profile-container">
-                <h1 className="text-lead text-center mt-5">{`${values.name}`}</h1>
-                <hr />
+                <h1 className="text-lead text-center">{`${values.name}`}</h1>
                 {profileInfo()}
                 {paymentInfo()}
             </div>

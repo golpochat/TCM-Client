@@ -129,7 +129,7 @@ const ExpenseList = () => {
 
             </div>
             <div className="row mt-5">
-                <div className="col-sm-12 col-md-12 col-lg-12">
+                <div className="col-sm-12 col-md-12 col-lg-12 table-responsive">
                     <table className="table display">
                         <thead>
                             <tr>
