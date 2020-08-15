@@ -144,11 +144,11 @@ const CreateSquad = ({ match, history }) => {
     );
     return (
         <Layout>
-            {/* <div className="container-squad-create"> */}
-            <h1 className="text-center">Create Playing Squad</h1>
-            <hr />
-            {createForm()}
-            {/* </div> */}
+            <div className="container-squad-create">
+                <h1 className="text-center">Create Playing Squad</h1>
+                <hr />
+                {createForm()}
+            </div>
         </Layout>
     );
 };
