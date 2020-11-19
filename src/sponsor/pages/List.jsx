@@ -70,7 +70,7 @@ const SponsorList = () => {
                                     <td className="text-right">
                                         <Link to={`/${isAuth().role}/sponsor/profile/${sponsor._id}`} className="btn btn-success btn-sm mr-2">View profile</Link>
                                         <Link to={`/${isAuth().role}/sponsor/update/${sponsor._id}`} className="btn btn-warning btn-sm mr-2">Edit</Link>
-                                        <Link to='#' onClick={() => { if (window.confirm('Are you sure, you want to delete this record?')) { handleDelete(sponsor) }; }} className="btn btn-danger btn-sm">Delete</Link>
+                                        <Link to='#' onClick={() => { if (window.confirm('Are you sure, you want to delete this record?')) { handleDelete(sponsor) } }} className="btn btn-danger btn-sm">Delete</Link>
                                     </td>
                                 </tr>
                             ))
